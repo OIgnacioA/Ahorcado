@@ -1,0 +1,61 @@
+.recuadro{
+
+width: 350px;
+height:300px;
+margin-left:40%;
+margin-top: 10%;
+background-color: coral;
+border-radius: 15%;
+border: 15px solid #000;
+position: relative;
+}
+
+.ingreso{
+
+position: absolute;
+margin-top:20%;
+background-color: coral;
+margin-left:15%;
+
+
+}
+
+
+.fotto{
+    position: absolute;
+    margin-top:20%;
+    background-color: coral;
+    margin-left:65%;
+    border: 5px solid #000;
+    border-radius: 15%;
+    height: 102px;
+}
+
+
+#respuesta{
+
+position: absolute;
+margin-top:60%;
+margin-left:45%;
+
+}
+
+#usadas{
+
+    position: absolute;
+    margin-top:60%;
+    margin-left:45%;
+}
+
+
+#usad{
+
+    position: absolute;
+    margin-top:60%;
+    margin-left:30%;
+}
+#titulo{
+
+font-size:20px;
+
+}

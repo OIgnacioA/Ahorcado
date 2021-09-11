@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+crossorigin="anonymous"></script>
+
+
+<script>
+
+var Resultado = [];
+var usada = [];
+var cont = 0;
+var cont2 = 0;
+
+
+
+var Palabras = ["antonella", "mate", "roqui","vermout", "aspen","nacho","vino", "motocicleta", "candado", "gaseosa", "picada", "baile", "gato", "zorro", "chancho", "jazz", "frio", "viaje", "estufa", "frio", "pachamama", "peron", "termo", "torta", "casco", "electrico","covid", "sociologia", "informatica", "guitarra", "cabaña", "cocodrilo", "alambrado", "rayo", "aceituna", "pulpo", "metro", "tren", "caramelo", "europa", "antena", "espatula", "mermelada", "hisopo", "puente", "zapatos", "jirafa", "nublado", "africa", "mirada", "cancion",  "historia", "remera", " escuela", "tablero", "naranja", "plantas", "anteojos", "sombrero", "mozzarella"];
+var NumRandom = (Math.round((Math.random())*60));
+
+        
+var incognita = Palabras[NumRandom];
+
+$(document).ready(function() {// inicia el armado de la palabra incognita, y limpia la pantalla. (f5)
+
+    for(var i=0; i<incognita.length; i++ ){
+        
+        Resultado.push(" _ ");
+    }
+    PalabraGuiones(Resultado);
+
+    document.getElementById("usadas").innerHTML="";
+    document.getElementById("letra").focus();
+    console.log(Palabras.length);   
+    
+})
+
+
+function letra(){ // Toma la letra del cuadro de texto. 
+    var pase = true; 
+    var num=0;
+    var Character = document.getElementById('letra').value;
+    var Letr = Character.toLowerCase();
+
+    for(var j = 0; j<Character.length; j++){
+        num = num + 1; 
+        if (Letr == " "){
+            num = num - 1; 
+        }
+    }
+
+    if (num > 1 ){
+        alert("ingresa de a una sola letra y sin espacios en blanco!");
+        document.getElementById('letra').value = "";
+        pase = false; 
+    }
+
+    if (num < 1 ){
+        alert("ingresa al menos una letra!");
+        document.getElementById('letra').value = "";
+        pase = false; 
+    }    
+
+    for(var U=0; U<usada.length; U++){
+
+        if(usada[U]== Letr){
+            alert("ya Utilizaste esa letra!");
+            pase = false; 
+        }
+    }
+    
+    for(var U=0; U<Resultado.length; U++){
+
+        if(Resultado[U]== Letr){
+        alert("ya Utilizaste esa letra!");
+        pase = false; 
+        }
+    }
+
+
+  
+    if (pase == true){ 
+      
+      return Letr; 
+    } 
+}
+
+
+function cuentaLetras(){// Principal : comprueba que la letra ingresada sea o no parte de la palabra a adivinar. 
+
+   
+    
+    if  (event.which == '13') { 
+
+        Letrina = letra(); 
+    }
+
+    console.log(Letrina);
+
+    for(var i = 0; i<incognita.length; i++){ // : La letra ingresada es parte de la palabra incognita?
+
+        if (incognita[i]==Letrina){
+            Resultado[i]= Letrina;
+        }
+    }
+
+    console.log(incognita + " " + Letrina);
+
+    usadas(); // si la letra se uso o no antes, y ademas guarda las inutiles. 
+    cont = Resultado.length; 
+
+    for(var i = 0; i<Resultado.length; i++){ //revision:  ¿Cuantas letras quedan por adivinar?
+
+        if(Resultado[i] != " _ "){
+            cont = cont -1; 
+        }
+    } 
+        
+    document.getElementById('letra').value = ""; //Limpiar
+    PalabraGuiones(Resultado);
+        
+    FinalizarWin(cont); 
+    document.getElementById("letra").focus();
+
+}
+
+
+function cuentaLetras2(){// opcion para click de mouse
+
+    Letrina = letra(); 
+
+    console.log(Letrina);
+
+    for(var i = 0; i<incognita.length; i++){ // : La letra ingresada es parte de la palabra incognita?
+
+        if (incognita[i]==Letrina){
+            Resultado[i]= Letrina;
+        }
+    }
+
+    console.log(incognita + " " + Letrina);
+
+    usadas(); // si la letra se uso o no antes, y ademas guarda las inutiles. 
+    cont = Resultado.length; 
+
+    for(var i = 0; i<Resultado.length; i++){ //revision:  ¿Cuantas letras quedan por adivinar?
+
+        if(Resultado[i] != " _ "){
+            cont = cont -1; 
+        }
+    } 
+        
+    document.getElementById('letra').value = ""; //Limpiar
+    PalabraGuiones(Resultado);
+        
+    FinalizarWin(cont); 
+    document.getElementById("letra").focus();
+
+}
+
+function usadas(){// Verifica que la letra ingresada no sirva, o ya se haya usado. Muestra letras inutiles por pantalla.
+
+    var valor = false; 
+    
+
+    for (var i=0; i<6; i++ ){
+
+        if (usada[i]==Letrina){
+            valor = true; 
+        }
+    }
+
+    for (var j=0; j<Resultado.length; j++ ){
+
+        if(Resultado[j] == Letrina){
+            valor = true;     
+        }
+    }
+
+    if(valor == false){
+     usada.push(Letrina);
+     cont2= cont2 + 1;
+     FinalizarLose(cont2); 
+     
+     
+       switch (cont2) {
+            case 1:
+                document.getElementById("fotografia").src="ahorcado_1.png";
+                break;
+            case 2:
+                document.getElementById("fotografia").src="ahorcado_2.png";
+                break;
+            case 3:
+                document.getElementById("fotografia").src="ahorcado_3.png";
+                break;
+            case 4:
+                document.getElementById("fotografia").src="ahorcado_4.png";
+                break;
+            case 5:
+                document.getElementById("fotografia").src="ahorcado_5.png";
+                break;
+            case 6:
+                document.getElementById("fotografia").src="ahorcado_6.png";
+                break;
+       }
+    }
+    
+    // usada.toLowerCase();
+    document.getElementById("usadas").innerHTML=usada;
+}
+
+
+function PalabraGuiones(text1){// Agrega por pantalla la palabra a armar. (en guiones) y las letras correctas. 
+    document.getElementById("respuesta").innerHTML= text1;
+}
+
+function FinalizarWin(arg){
+  
+  var sonido_uno = new Audio("Victoria.mp3");
+    
+    if (arg == 0 ){
+        sonido_uno.play();
+            
+        setTimeout(()=>{
+
+            var mensaje =  confirm("En horabuena! ganaste!!, la palabra era: " + incognita);
+            if (mensaje){
+                location.reload();
+            }
+          
+        }, 500);
+       
+    
+       
+        
+    }
+}
+
+function FinalizarLose(arg){
+
+  var  sonido_dos = new Audio("Abucheo.mp3");
+
+    if (arg == 6 ){
+        sonido_dos.play();
+            
+        setTimeout(()=>{
+
+            var mensaje =  confirm("Perdiste, la palabra era: " + incognita);
+            if (mensaje){
+                location.reload();
+            }
+          
+        }, 500);
+
+    } 
+
+}
+
+</script>
+
+<body onkeydown="cuentaLetras();" >
+
+    <div class="recuadro">
+
+        <div class="ingreso">
+            <label id="titulo">Ingrese una Letra</label> <br>
+            <input id="letra" type="text" ><br><br>
+            <input type="button" value="Probar Letra"  onclick="cuentaLetras2();"> 
+        </div>
+
+        <div class="fotto">
+
+            <img id="fotografia" src="ahorcado_0.png" alt="">
+
+        </div>
+
+        <label id="respuesta"></label><br><br>
+
+        <label id="usad">Usadas: </label>
+        <label id="usadas"></label>
+   
+    </div>
+
+</body>
+</html>
